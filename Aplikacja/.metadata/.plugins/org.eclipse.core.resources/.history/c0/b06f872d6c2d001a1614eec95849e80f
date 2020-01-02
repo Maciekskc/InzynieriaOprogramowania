@@ -41,7 +41,7 @@ public class CustomerData {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public String toString() {
+	public toString() {
 		return idNumber+";"+name+";"+surname;
 	}
 	

@@ -2,4 +2,8 @@
 <qualifiedTypeNameHistroy>
     <fullyQualifiedTypeName name="PresentationLayer.UsersUseCases.IModifyMethods"/>
     <fullyQualifiedTypeName name="PresentationLayer.UsersUseCases.ISalesmanMethods"/>
+    <fullyQualifiedTypeName name="DataLayer.Components.Video"/>
+    <fullyQualifiedTypeName name="java.util.ArrayList"/>
+    <fullyQualifiedTypeName name="java.util.Calendar"/>
+    <fullyQualifiedTypeName name="DataLayer.Components.CustomerData"/>
 </qualifiedTypeNameHistroy>
