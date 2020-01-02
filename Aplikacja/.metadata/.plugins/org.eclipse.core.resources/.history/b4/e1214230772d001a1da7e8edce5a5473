@@ -3,7 +3,11 @@ package DataLayer.Components;
 public class Video {
 	private int id;
 	private String name;
-
+	
+	private enum Type{
+		AKCJI,HORROR,KOMEDIA
+	}
+	
 	private Type type;
 	private int duration;
 	public Type getType() {

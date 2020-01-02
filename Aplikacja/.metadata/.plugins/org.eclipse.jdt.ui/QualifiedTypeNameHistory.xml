@@ -2,8 +2,11 @@
 <qualifiedTypeNameHistroy>
     <fullyQualifiedTypeName name="PresentationLayer.UsersUseCases.IModifyMethods"/>
     <fullyQualifiedTypeName name="PresentationLayer.UsersUseCases.ISalesmanMethods"/>
-    <fullyQualifiedTypeName name="DataLayer.Components.Video"/>
-    <fullyQualifiedTypeName name="java.util.ArrayList"/>
     <fullyQualifiedTypeName name="java.util.Calendar"/>
     <fullyQualifiedTypeName name="DataLayer.Components.CustomerData"/>
+    <fullyQualifiedTypeName name="DataLayer.Components.Rental"/>
+    <fullyQualifiedTypeName name="java.lang.Boolean"/>
+    <fullyQualifiedTypeName name="java.util.ArrayList"/>
+    <fullyQualifiedTypeName name="DataLayer.Components.Video"/>
+    <fullyQualifiedTypeName name="DataLayer.Components.Type"/>
 </qualifiedTypeNameHistroy>
