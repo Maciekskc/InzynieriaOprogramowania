@@ -2,11 +2,19 @@
 <qualifiedTypeNameHistroy>
     <fullyQualifiedTypeName name="PresentationLayer.UsersUseCases.IModifyMethods"/>
     <fullyQualifiedTypeName name="PresentationLayer.UsersUseCases.ISalesmanMethods"/>
-    <fullyQualifiedTypeName name="java.util.Calendar"/>
-    <fullyQualifiedTypeName name="DataLayer.Components.CustomerData"/>
-    <fullyQualifiedTypeName name="DataLayer.Components.Rental"/>
     <fullyQualifiedTypeName name="java.lang.Boolean"/>
-    <fullyQualifiedTypeName name="java.util.ArrayList"/>
     <fullyQualifiedTypeName name="DataLayer.Components.Video"/>
     <fullyQualifiedTypeName name="DataLayer.Components.Type"/>
+    <fullyQualifiedTypeName name="DataLayer.Data"/>
+    <fullyQualifiedTypeName name="java.lang.Exception"/>
+    <fullyQualifiedTypeName name="java.io.BufferedReader"/>
+    <fullyQualifiedTypeName name="java.io.FileReader"/>
+    <fullyQualifiedTypeName name="DataLayer.Components.CustomerData"/>
+    <fullyQualifiedTypeName name="java.text.SimpleDateFormat"/>
+    <fullyQualifiedTypeName name="java.util.Date"/>
+    <fullyQualifiedTypeName name="java.util.Calendar"/>
+    <fullyQualifiedTypeName name="java.util.ArrayList"/>
+    <fullyQualifiedTypeName name="DataLayer.Components.Rental"/>
+    <fullyQualifiedTypeName name="DataLayer.DataAccessLayer.IDataOperations"/>
+    <fullyQualifiedTypeName name="DataLayer.DataAccessLayer.DataOperationsImpl"/>
 </qualifiedTypeNameHistroy>

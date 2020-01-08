@@ -1,0 +1,24 @@
+package PresentationLayer;
+
+import javax.swing.JPanel;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+
+public class MainPanel extends JPanel {
+
+	/**
+	 * Create the panel.
+	 */
+	public MainPanel() {
+		
+		JButton btnAddRentals = new JButton("Dodaj Wypo¿yczenie");
+		btnAddRentals.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		add(btnAddRentals);
+
+	}
+
+}

@@ -1,0 +1,8 @@
+package BusinesLayer;
+
+import DataLayer.DataAccessLayer.DataOperationsImpl;
+import DataLayer.DataAccessLayer.IDataOperations;
+
+public class Controller {
+	IDataOperations dtoData = new DataOperationsImpl();
+}

@@ -1,0 +1,14 @@
+package PresentationLayer;
+
+import BusinesLayer.Controller;
+import PresentationLayer.UsersUseCases.IModifyMethods;
+import PresentationLayer.UsersUseCases.ISalesmanMethods;
+
+public class App implements IModifyMethods, ISalesmanMethods {
+	
+	Controller controller = new Controller();
+
+	public static void main(String[] args) {
+		System.out.print("Duuuupa, ale ruszy³em");
+	}
+}

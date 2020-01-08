@@ -1,0 +1,106 @@
+package PresentationLayer;
+
+import javax.swing.JPanel;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.SwingUtilities;
+
+import BusinesLayer.Controller;
+import DataLayer.Components.Rental;
+import PresentationLayer.UsersUseCases.IModifyMethods;
+import PresentationLayer.UsersUseCases.ISalesmanMethods;
+
+import javax.swing.JMenuBar;
+import javax.swing.JMenu;
+import javax.swing.JMenuItem;
+
+public class App extends JPanel  implements IModifyMethods, ISalesmanMethods  {
+
+	/**
+	 * Create the panel.
+	 */
+	private JTable table ;
+
+	private Controller controller = new Controller();
+
+	public static void main(String[] args) {
+		SwingUtilities.invokeLater(new Runnable() {
+	        @Override
+	        public void run() {
+	        	new App();
+	        }
+	    });  
+		
+		System.out.print("Duuuupa, ale ruszy³em");
+	}
+	
+	public App() {
+		JFrame mainFrame = new JFrame();
+		mainFrame.setTitle("Kasecik");
+		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		mainFrame.getContentPane().add(this);
+	    mainFrame.setSize(465, 350);
+	    mainFrame.setResizable(false);
+	    mainFrame.setVisible(true);
+	    
+		
+        setLayout(null);
+
+        table = new JTable();
+
+		JScrollPane scrollPane = new JScrollPane( table );
+		scrollPane.setBounds(10, 48, 430, 176);
+		this.add(scrollPane);
+		
+		JMenuBar menuBar = new JMenuBar();
+		menuBar.setBounds(0, 0, 450, 22);
+		add(menuBar);
+		
+		JMenu mnWypoyczenia = new JMenu("Wypo\u017Cyczenia");
+		menuBar.add(mnWypoyczenia);
+		
+		JMenuItem mntmAddRental = new JMenuItem("Dodaj");
+		mnWypoyczenia.add(mntmAddRental);
+		
+		JMenuItem mntmDeleteRental = new JMenuItem("Usun");
+		mnWypoyczenia.add(mntmDeleteRental);
+		
+		JMenuItem mntmEditRental = new JMenuItem("Edytuj");
+		mnWypoyczenia.add(mntmEditRental);
+		
+		JMenu mnKasety = new JMenu("Kasety");
+		menuBar.add(mnKasety);
+		
+		JMenuItem mntmAddVideo = new JMenuItem("Dodaj");
+		mnKasety.add(mntmAddVideo);
+		
+		JMenuItem mntmDeleteVideo = new JMenuItem("Usun");
+		mnKasety.add(mntmDeleteVideo);
+		
+		JMenuItem mntmEditVideo = new JMenuItem("Edytuj");
+		mnKasety.add(mntmEditVideo);
+		
+		JButton buttonRentals = new JButton("Wypo\u017Cyczenia");
+		buttonRentals.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String[] rentalsColName = new String[] { "Id" ,"Imie","Nazwisko","Data oddania","Lista Filmow" };
+				table = new JTable(controller.getDtoData().videos ,rentalsColName)
+			}
+		});
+		buttonRentals.setBounds(10, 235, 199, 23);
+		add(buttonRentals);
+		
+		JButton buttonVideos = new JButton("Filmy");
+		buttonVideos.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		buttonVideos.setBounds(240, 235, 199, 23);
+		add(buttonVideos);
+	}
+}

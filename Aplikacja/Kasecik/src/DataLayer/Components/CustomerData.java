@@ -11,6 +11,18 @@ public class CustomerData {
 	private String surname;
 	private String telephoneNumber;
 	private String email;
+	
+	
+	
+	public CustomerData(int idNumber, String name, String surname, String telephoneNumber, String email) {
+		super();
+		this.idNumber = idNumber;
+		this.name = name;
+		this.surname = surname;
+		this.telephoneNumber = telephoneNumber;
+		this.email = email;
+	}
+	
 	public int getIdNumber() {
 		return idNumber;
 	}

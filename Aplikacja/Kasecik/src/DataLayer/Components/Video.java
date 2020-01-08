@@ -4,21 +4,47 @@ public class Video {
 	private int id;
 	private String name;
 
-	private Type type;
+	private String type;
 	private int duration;
-	public Type getType() {
-		return type;
-	}
-	public void setType(Type type) {
-		this.type = type;
-	}
 	private int amount;
+
+	
+	public Video(String line) {
+		String [] strArr = line.split(";");
+		this.id = Integer.parseInt(strArr[0]);
+		this.name = strArr[1];
+		this.type = strArr[2];
+		this.id = Integer.parseInt(strArr[4]);
+		this.id = Integer.parseInt(strArr[5]);
+	}
+	
+	
+	public Video(int id, String name, String type, int duration, int amount) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.type = type;
+		this.duration = duration;
+		this.amount = amount;
+	}
+
+
 	public int getId() {
 		return id;
 	}
 	public void setId(int id) {
 		this.id = id;
 	}
+	public String getType() {
+		return type;
+	}
+
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
+
 	public String getName() {
 		return name;
 	}

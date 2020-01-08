@@ -1,0 +1,27 @@
+package PresentationLayer;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+
+import BusinesLayer.Controller;
+import PresentationLayer.UsersUseCases.IModifyMethods;
+import PresentationLayer.UsersUseCases.ISalesmanMethods;
+
+public class App implements IModifyMethods, ISalesmanMethods {
+	
+	Controller controller = new Controller();
+
+	public static void main(String[] args) {
+		JFrame mainFrame = new JFrame();
+		mainFrame.setTitle("Kasecik");
+		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	    JPanel mainPanel = new MainPanel();
+	    mainFrame.add(mainPanel);
+	    mainFrame.setSize(400, 300);
+	    mainFrame.setVisible(true);
+	    
+	    mainFrame.pack();
+	    
+		System.out.print("Duuuupa, ale ruszy³em");
+	}
+}

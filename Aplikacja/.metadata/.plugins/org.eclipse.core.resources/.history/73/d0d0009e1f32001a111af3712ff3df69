@@ -1,0 +1,57 @@
+package DataLayer;
+
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.util.ArrayList;
+
+import DataLayer.Components.CustomerData;
+import DataLayer.Components.Rental;
+import DataLayer.Components.Video;
+
+public class Data {
+	private ArrayList<Video> videos;
+	private ArrayList<Rental> rentals;
+	private float rate = 1.99F;
+	
+	public Data() {
+		loadBackUp();
+	}
+	
+	public Data(ArrayList<Video> videos, ArrayList<Rental> rentals, float rate) {
+		super();
+		this.videos = videos;
+		this.rentals = rentals;
+		this.rate = rate;
+	}
+	
+	private void loadBackUp() {
+		    BufferedReader reader;
+			try {
+				reader = new BufferedReader(new FileReader("videosBackUp.txt"));
+				String line;
+				while ((line = reader.readLine()) != null)
+				{
+					Video video = new Video(line);
+					videos.add(video);
+				}
+				reader.close();
+				
+				reader = new BufferedReader(new FileReader("rentalsBackUp.txt"));
+				while ((line = reader.readLine()) != null)
+				{
+					String [] strArr = line.split(";");
+					CustomerData customer = new CustomerData(Integer.parseInt(strArr[0]),strArr[1],strArr[2],strArr[3],strArr[4]);
+					
+				}
+				reader.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+	}
+	
+	public void addRental(Rental rental) {
+		rentals.add(rental);
+	}
+	
+}
