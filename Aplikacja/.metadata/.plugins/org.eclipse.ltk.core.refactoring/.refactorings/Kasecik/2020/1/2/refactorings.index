@@ -6,3 +6,4 @@
 1578496054347	Rename type 'MainPanel'
 1578496311907	Extract local variable 'rentalsColName2'
 1578498338585	Extract local variable 'video'
+1578502869744	Extract local variable 'after'

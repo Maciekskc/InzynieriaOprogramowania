@@ -17,7 +17,7 @@ public interface IDataOperations {
 	public boolean addVideo(Video video);
 	public boolean removeVideo(Video video);
 	public boolean editVideoById(Video video, int id);
-	public ArrayList<Video> getVideos(int id, String name,  Type type);
+	public ArrayList<Video> getVideos(int id, String name,  String type);
 	public ArrayList<Video> getAllVideos();
 	
 }

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 public class Rental {
-
+		private int id;
 		private ArrayList<Video> videos = new ArrayList();
 		private Calendar rentalDate;
 		private Calendar rentalExpireDate;
@@ -21,6 +21,13 @@ public class Rental {
 			this.customer = customer;
 		}
 		
+		public int getId() {
+			return id;
+		}
+		
+		public void setId(int id) {
+			this.id = id;
+		}
 		public ArrayList<Video> getVideos() {
 			return videos;
 		}

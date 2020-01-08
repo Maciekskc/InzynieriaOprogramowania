@@ -7,7 +7,9 @@ import javax.swing.JFrame;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Vector;
+import java.util.concurrent.ThreadPoolExecutor.CallerRunsPolicy;
 import java.awt.event.ActionEvent;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -37,13 +39,19 @@ public class App extends JPanel implements IModifyMethods, ISalesmanMethods {
 	private Controller controller = new Controller();
 
 	public static void main(String[] args) {
+		//do wyjebania
+		Calendar cal = Calendar.getInstance();
+		Calendar calen = Calendar.getInstance();
+		boolean after = calen.after(cal);
+		System.out.println("dawniej odjac wczesniej:"+ after);
+		
 		SwingUtilities.invokeLater(new Runnable() {
 			@Override
 			public void run() {
 				new App();
 			}
 		});
-		System.out.print("Duuuupa, ale ruszy³em");
+		System.out.println("Duuuupa, ale ruszy³em");
 	}
 
 	public App() {
