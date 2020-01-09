@@ -1,0 +1,38 @@
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.util.Calendar;
+
+import DataLayer.Components.Rental;
+
+public class mpWrite {
+
+	Calendar first = Calendar.getInstance();
+	Calendar second = Calendar.getInstance();
+
+	public static void main(String[] args) {
+		
+		BufferedWriter writer = null;
+		try {
+			// create a temporary file
+			String path = "tmp.txt";
+			File logFile = new File(path);
+			System.out.println("Utworzono plik z zapasowymi danymi" + logFile.getCanonicalPath());
+
+			writer = new BufferedWriter(new FileWriter(logFile));
+				writer.write(first.getTime().toString());
+				writer.newLine();
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				// Close the writer regardless of what happens...
+				writer.close();
+			} catch (Exception e) {
+			}
+		}
+	}
+
+}

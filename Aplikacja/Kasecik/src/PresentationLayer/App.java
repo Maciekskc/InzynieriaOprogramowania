@@ -5,6 +5,8 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 
 import java.awt.event.ActionListener;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -32,20 +34,14 @@ public class App extends JPanel implements IModifyMethods, ISalesmanMethods {
 	 * Create the panel.
 	 */
 	//do wyjebania
-	String data[][] = { { "Vinod", "100" }, { "Raju", "200" }, { "Ranju", "300" } };
-	String col[] = { "Name", "code" };
+	String data[][] = { { "Maciej Bia³kowski", "Aplikacja do obs³ugi" }, { "Aleksandra Malicka", "wypo¿yczalni kaset video" } };
+	String col[] = { "Autorzy Projektu","Opis Projektu" };
 	private DefaultTableModel tableModel = new DefaultTableModel(data, col);
 	private JTable table;
 
 	private Controller controller = new Controller();
 
 	public static void main(String[] args) {
-		//do wyjebania
-		Calendar cal = Calendar.getInstance();
-		Calendar calen = Calendar.getInstance();
-		boolean after = calen.after(cal);
-		System.out.println("dawniej odjac wczesniej:"+ after);
-		
 		SwingUtilities.invokeLater(new Runnable() {
 			@Override
 			public void run() {
@@ -87,11 +83,24 @@ public class App extends JPanel implements IModifyMethods, ISalesmanMethods {
 		});
 		mnRentals.add(mntmAddRental);
 
-		JMenuItem mntmDeleteRental = new JMenuItem("Usun");
+		JMenuItem mntmDeleteRental = new JMenuItem("Zwróæ");
+		mntmDeleteRental.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				controller.removeRental();
+			}
+		});
 		mnRentals.add(mntmDeleteRental);
 
 		JMenuItem mntmEditRental = new JMenuItem("Edytuj");
 		mnRentals.add(mntmEditRental);
+		
+		JMenuItem mntmDepricated = new JMenuItem("Przeterminowane");
+		mntmDepricated.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				fillWithRentals(controller.getDepricatedRentals());
+			}
+		});
+		mnRentals.add(mntmDepricated);
 
 		JMenu mnVideos = new JMenu("Kasety");
 		menuBar.add(mnVideos);
@@ -123,7 +132,7 @@ public class App extends JPanel implements IModifyMethods, ISalesmanMethods {
 		JButton buttonRentals = new JButton("Wypo\u017Cyczenia");
 		buttonRentals.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				fillWithRentals();
+				fillWithRentals(controller.getRentals());
 			}
 		});
 		buttonRentals.setBounds(10, 235, 199, 23);
@@ -132,15 +141,15 @@ public class App extends JPanel implements IModifyMethods, ISalesmanMethods {
 		JButton buttonVideos = new JButton("Filmy");
 		buttonVideos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				fillWithVideos();
+				fillWithVideos(controller.getAllVideos());
 			}
 		});
 		buttonVideos.setBounds(240, 235, 199, 23);
 		add(buttonVideos);
 	}
 
-	private void fillWithRentals() {
-		String collumnNames[] = { "Imie", "Nazwisko", "Data wypo¿yczenia", "Data zwrotu" };
+	private void fillWithRentals(ArrayList<Rental> rentals) {
+		String collumnNames[] = { "Id","Imie", "Nazwisko", "Data zwrotu" };
 
 		try {
 
@@ -153,23 +162,23 @@ public class App extends JPanel implements IModifyMethods, ISalesmanMethods {
 
 		tableModel.setColumnIdentifiers(collumnNames);
 		try {
-			for (int i = 0; i < controller.getRentals().size(); i++) {
-				Rental rent = controller.getRentals().get(i);
-				Object[] show = { rent.getCustomer().getName(), rent.getCustomer().getSurname(), rent.getRentalDate(),
-						rent.getRentalExpireDate() };
+			for (int i = 0; i < rentals.size(); i++) {
+				Rental rent = rentals.get(i);
+				Object[] show = { rent.getId(),rent.getCustomer().getName(), rent.getCustomer().getSurname(),
+						rent.getRentalExpireDate().getTime() };
 				tableModel.insertRow(i, show);
 			}
 		} catch (Exception e1) {
 			System.out.println(tableModel);
 		}
-		for(Rental r : controller.getRentals()) {
+		for(Rental r : rentals) {
 			System.out.println(r.toString());
 		}
 	}
 
-	private void fillWithVideos() {
+	private void fillWithVideos( ArrayList<Video> videos) {
 		//przyk³¹dowy rekord, do wywalenia
-		System.out.println(controller.getAllVideos().size());
+		System.out.println(videos.size());
 		String collumnNames[] = { "Id", "Nazwa", "Czas trwania", "Typ", "Iloœæ na stanie" };
 
 		try {
@@ -183,8 +192,8 @@ public class App extends JPanel implements IModifyMethods, ISalesmanMethods {
 
 		tableModel.setColumnIdentifiers(collumnNames);
 		try {
-			for (int i = 0; i < controller.getAllVideos().size(); i++) {
-				Video video = controller.getAllVideos().get(i);
+			for (int i = 0; i < videos.size(); i++) {
+				Video video = videos.get(i);
 				Object[] show = { video.getId(), video.getName(), video.getDuration() + "minut", video.getType(),
 						video.getAmount() };
 				tableModel.insertRow(i, show);
@@ -192,9 +201,8 @@ public class App extends JPanel implements IModifyMethods, ISalesmanMethods {
 		} catch (Exception e1) {
 			System.out.println(tableModel);
 		}
-		for(Video v : controller.getAllVideos()) {
+		for(Video v : videos) {
 			System.out.println(v.toString());
 		}
 	}
-
 }

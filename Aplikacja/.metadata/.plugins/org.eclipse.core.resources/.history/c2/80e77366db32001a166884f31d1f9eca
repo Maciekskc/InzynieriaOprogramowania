@@ -1,0 +1,149 @@
+package DataLayer.DataAccessLayer;
+
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.concurrent.Callable;
+
+import DataLayer.Data;
+import DataLayer.Components.CustomerData;
+import DataLayer.Components.Rental;
+import DataLayer.Components.Type;
+import DataLayer.Components.Video;
+
+public class DataOperationsImpl implements IDataOperations {
+
+	//obiekt przchowuj¹cy wszystkie dane
+	Data data = new Data();
+	
+	//dodaj obiekt wypo¿yczenia
+	@Override
+	public boolean addRental(ArrayList<Video> videos, CustomerData customer) {
+		try{
+			Rental newOne = new Rental();
+			newOne.setRentalDate(Calendar.getInstance());
+			Calendar date = newOne.getRentalDate();
+			date.add(Calendar.DAY_OF_YEAR, 5);
+			newOne.setRentalExpireDate(date);
+			newOne.setCustomer(customer);
+			newOne.setVideos(videos);
+			data.rentals.add(newOne);
+		}catch(Exception e) {
+			return false;
+		}
+		return true;
+	}
+	
+	//usuñ podany w parametrze obiekt wypo¿yczenia jeœli istnieje 
+	@Override
+	public boolean removeRental(Rental rental) {
+		for (Rental rent : data.rentals)
+			if(rent.equals(rental)) {
+				data.rentals.remove(rent);
+				return true;
+			}
+		return false;
+	}
+
+	//zwraca wypo¿yczenie o podanym indeksie
+	@Override
+	public Rental getRentalById(int id) {
+		for(int i = 0 ; i < data.rentals.size() ; i ++) {
+			if(data.rentals.get(i).getId() == id) return data.rentals.get(i);
+		}
+		return null;
+	}
+
+
+	//zmienia wspó³czynnik cebny wyporzyczenia na podany
+	@Override
+	public boolean changeSurcharge(float rate) {
+		data.rate = rate;
+		return true;
+	}
+
+	//dodaje wideo do bazy danych
+	@Override
+	public boolean addVideo(Video video) {
+		boolean exist = false;
+		for (Video v : data.videos)
+			if(v.equals(video)) {
+				exist = true;
+				break;
+			}
+		if(!exist) {
+			data.videos.add(video);
+			createBackUp();
+			return true;
+		}
+		
+		return false;
+	}
+
+	//usuwa kasetê pod warunkiem ¿e takowe istnieje
+	@Override
+	public boolean removeVideo(Video video) {
+		for (Video v : data.videos)
+			if(v.equals(video)) {
+				data.videos.remove(video);
+				return true;
+			}
+		return false;
+	}
+
+	//zmienia kasetê o podanym numerze id na nowe
+	@Override
+	public boolean editVideoById(Video video, int id) {
+		for (int i = 0 ; i < data.videos.size() ; i ++)
+			if(data.videos.get(i).getId() == id) {
+				data.videos.get(i).setName(video.getName());
+				data.videos.get(i).setType(video.getType());
+				data.videos.get(i).setDuration(video.getDuration());
+				data.videos.get(i).setAmount(video.getAmount());
+				return true;
+			}
+		return false;
+	}
+
+
+	@Override
+	public ArrayList<Video> getAllVideos() {
+		return data.videos;
+	}
+
+	@Override
+	public ArrayList<Rental> getRentals() {
+		return data.rentals;
+	}
+	
+	public void createBackUp() {
+		//tworzenie back upu
+	      BufferedWriter writer = null;
+	        try {
+	            //create a temporary file
+	            String timeLog = "VideoBackUp.txt";
+	            File logFile = new File(timeLog);
+
+	            // This will output the full path where the file will be written to...
+	            System.out.println(logFile.getCanonicalPath());
+
+	            writer = new BufferedWriter(new FileWriter(logFile));
+	            writer.write("Hello world!");
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	        } finally {
+	            try {
+	                // Close the writer regardless of what happens...
+	                writer.close();
+	            } catch (Exception e) {
+	            }
+	        }
+	}
+
+	@Override
+	public float getRate() {
+		return data.rate;
+	}
+}

@@ -1,0 +1,130 @@
+package BusinesLayer;
+
+import java.awt.Frame;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.Calendar;
+
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JDialog;
+import javax.swing.JOptionPane;
+import javax.swing.JRadioButton;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+
+import DataLayer.Components.Rental;
+import DataLayer.Components.Video;
+import DataLayer.DataAccessLayer.DataOperationsImpl;
+import DataLayer.DataAccessLayer.IDataOperations;
+import PresentationLayer.Forms.CreateVideoDialog;
+import PresentationLayer.Forms.RentalDialog;
+
+class RentalController {
+	private IDataOperations dtoData = new DataOperationsImpl();
+
+	private ReminderSender reminderSender;
+
+	public RentalController(IDataOperations dtoData) {
+		super();
+		this.dtoData = dtoData;
+		reminderSender = new ReminderSender(this.dtoData);
+	}
+
+	public boolean addRental() {
+		JDialog dialog = new RentalDialog(dtoData.getAllVideos()) {
+			public void actionPerformed(ActionEvent e) {
+				if(dtoData.addRental(getSelectedVideos(),createCustomer())) {					
+					JOptionPane.showMessageDialog(new Frame(), "Dodano Wypo¿yczenie");
+				}else {
+					JOptionPane.showMessageDialog(new Frame(), "Nie uda³o siê dodaæ wypo¿yczenia");
+				}
+			}
+        };
+        dialog.show();
+        return true;
+	}
+
+	public boolean removeRental() {
+		ArrayList<Rental> rental = getRentals();
+		JDialog dialog = new JDialog() ;
+		dialog.setLayout(null);
+		dialog.setBounds(100, 100, 220, 110);
+			JComboBox comboBoxVideos = new JComboBox<Video>();
+			comboBoxVideos.setBounds(10, 10, 180, 20);
+			for(int i = 0 ; i < rental.size() ; i++)
+				comboBoxVideos.addItem(rental.get(i));
+		dialog.add(comboBoxVideos);
+		JRadioButton rdbtnWygenerujPotwierdzenie = new JRadioButton("Potwierdzenie");
+		rdbtnWygenerujPotwierdzenie.setBounds(6, 52, 109, 23);
+		dialog.add(rdbtnWygenerujPotwierdzenie);
+		JButton buttonRemove = new JButton("Zwróæ");
+		buttonRemove.setBounds(50, 40, 100, 20);
+		buttonRemove.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(rdbtnWygenerujPotwierdzenie.isSelected()) {
+					JDialog reciptDialog = new JDialog() ;
+					reciptDialog.setLayout(null);
+					reciptDialog.setBounds(100, 100, 300, 400);
+					
+					JTextArea textAreaRecipt = new JTextArea();
+					textAreaRecipt.setText("zrob opis");
+					textAreaRecipt.setBounds(10, 10, 200, 380);
+					reciptDialog.add(textAreaRecipt);
+					
+					Rental rental = (Rental)comboBoxVideos.getSelectedItem();
+					String receipt = "///Potwierdzenie///\n";
+					receipt+="U¿ytkownik: "+rental.getCustomer().getName()+rental.getCustomer().getSurname()+"\n";
+					receipt+="Numer Telefonu: "+rental.getCustomer().getTelephoneNumber()+"\n";
+					receipt+="Adres E-mail: "+rental.getCustomer().getEmail()+"\n"+"\n";
+					receipt+="Data Wypo¿yczenia: "+rental.getRentalDate().getTime()+"\n";
+					receipt+="Data Zwrotu: "+rental.getRentalExpireDate().getTime()+"\n\n";
+					receipt+="Lista Filmów: \n";
+					for(Video video : rental.getVideos())
+						receipt+="\t"+video.getName()+"\n";
+					receipt+="\nDop³ata:\t"+calculateSurcharge(rental)+"z³";
+					textAreaRecipt.setText(receipt);
+					reciptDialog.show();
+				}
+				
+				if(dtoData.removeRental((Rental)comboBoxVideos.getSelectedItem()))
+					JOptionPane.showMessageDialog(new Frame(), "Pomyœlnie usuniêto obiekt");
+			}
+		});
+		dialog.add(buttonRemove);
+		dialog.show();
+		return true;
+	}
+
+	public ArrayList<Rental> getRentals(){
+		return dtoData.getRentals();		
+	}
+	
+	public ArrayList<Rental> getDepricatedRentals(){
+		ArrayList<Rental> depricated = new ArrayList<>();
+		Calendar currentDate = Calendar.getInstance();
+		
+		for(Rental rent: dtoData.getRentals()) {
+			if(currentDate.after(rent.getRentalExpireDate())) {
+				depricated.add(rent);
+			}
+		}
+		
+		return depricated;	
+	}
+	
+	
+	public void genetateReminders() {
+		reminderSender.generateReminder();
+	}
+
+	//zmianaa ceny
+	public float calculateSurcharge(Rental rental) {
+		Calendar currentDate = Calendar.getInstance();
+		float surcharge = dtoData.getRate() * (float)currentDate.compareTo(rental.getRentalExpireDate());
+		if(surcharge<0)return 0;
+		return surcharge;
+				
+	}
+}

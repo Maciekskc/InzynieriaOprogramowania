@@ -1,5 +1,8 @@
 package DataLayer.DataAccessLayer;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.concurrent.Callable;
@@ -30,6 +33,7 @@ public class DataOperationsImpl implements IDataOperations {
 		}catch(Exception e) {
 			return false;
 		}
+		createRentalBackUp();
 		return true;
 	}
 	
@@ -72,6 +76,7 @@ public class DataOperationsImpl implements IDataOperations {
 			}
 		if(!exist) {
 			data.videos.add(video);
+			createVideoBackUp();
 			return true;
 		}
 		
@@ -84,6 +89,7 @@ public class DataOperationsImpl implements IDataOperations {
 		for (Video v : data.videos)
 			if(v.equals(video)) {
 				data.videos.remove(video);
+				createVideoBackUp();
 				return true;
 			}
 		return false;
@@ -98,6 +104,7 @@ public class DataOperationsImpl implements IDataOperations {
 				data.videos.get(i).setType(video.getType());
 				data.videos.get(i).setDuration(video.getDuration());
 				data.videos.get(i).setAmount(video.getAmount());
+				createVideoBackUp();
 				return true;
 			}
 		return false;
@@ -114,7 +121,59 @@ public class DataOperationsImpl implements IDataOperations {
 		return data.rentals;
 	}
 	
-	public void createBackUp() {
-		
+	public void createVideoBackUp() {
+	      BufferedWriter writer = null;
+	        try {
+	            //create a temporary file
+	            String path = "VideosBackUp.txt";
+	            File logFile = new File(path);
+	            System.out.println("Utworzono plik z zapasowymi danymi" + logFile.getCanonicalPath());
+
+	            writer = new BufferedWriter(new FileWriter(logFile));
+	            for(Video video : data.videos) {
+	            	writer.write(video.toString());
+	            	writer.newLine();
+	            }
+	            
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	        } finally {
+	            try {
+	                // Close the writer regardless of what happens...
+	                writer.close();
+	            } catch (Exception e) {
+	            }
+	        }
+	}
+
+	public void createRentalBackUp() {
+		//tworzenie back upu
+	      BufferedWriter writer = null;
+	        try {
+	            //create a temporary file
+	            String path = "RentalsBackUp.txt";
+	            File logFile = new File(path);
+	            System.out.println("Utworzono plik z zapasowymi danymi" + logFile.getCanonicalPath());
+
+	            writer = new BufferedWriter(new FileWriter(logFile));
+	            for(Rental rental : data.rentals) {
+	            	writer.write(rental.fullString());
+	            	writer.newLine();
+	            }
+	            
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	        } finally {
+	            try {
+	                // Close the writer regardless of what happens...
+	                writer.close();
+	            } catch (Exception e) {
+	            }
+	        }
+	}
+	
+	@Override
+	public float getRate() {
+		return data.rate;
 	}
 }

@@ -17,5 +17,6 @@ public interface IDataOperations {
 	public boolean removeVideo(Video video);
 	public boolean editVideoById(Video video, int id);
 	public ArrayList<Video> getAllVideos();
+	public float getRate();
 	
 }

@@ -14,8 +14,8 @@ public class Video {
 		this.id = Integer.parseInt(strArr[0]);
 		this.name = strArr[1];
 		this.type = strArr[2];
-		this.id = Integer.parseInt(strArr[4]);
-		this.id = Integer.parseInt(strArr[5]);
+		this.duration = Integer.parseInt(strArr[3]);
+		this.amount = Integer.parseInt(strArr[4]);
 	}
 	
 	
@@ -26,6 +26,10 @@ public class Video {
 		this.type = type;
 		this.duration = duration;
 		this.amount = amount;
+	}
+
+
+	public Video() {
 	}
 
 

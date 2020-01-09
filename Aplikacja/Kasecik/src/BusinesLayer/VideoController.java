@@ -25,7 +25,7 @@ import DataLayer.DataAccessLayer.IDataOperations;
 import PresentationLayer.Forms.CreateVideoDialog;
 
 class VideoController  {
-	private IDataOperations dtoData = new DataOperationsImpl();
+	private IDataOperations dtoData;
 
 	public VideoController(IDataOperations dtoData) {
 		super();

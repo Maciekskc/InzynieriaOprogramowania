@@ -1,0 +1,39 @@
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.util.Calendar;
+
+import DataLayer.Components.Rental;
+
+public class tmpRead {
+
+	Calendar first = Calendar.getInstance();
+	Calendar second = Calendar.getInstance();
+	
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+	}
+
+	public tmpRead(Calendar first, Calendar second) {
+
+		try {
+			System.out.println("zaczynamy wypo¿yczenia:");
+			File file = new File("tmp.txt");
+			reader = new BufferedReader(new FileReader(file));
+			System.out.println("ustawiono reader");
+			while ((line = reader.readLine()) != null)
+			{
+				//System.out.println("obiekt wygl¹da nastêpuj¹co:"+line);
+				Rental rental = new Rental(line);
+				System.out.println("odczytano obiekt:");
+				rentals.add(rental);
+				System.out.println("za³adowano obiekt");
+			}
+			reader.close();
+		} catch (Exception e) {
+			System.out.println("Nie Uda³o siê za³adowaæ wszystkich danych o wyporzyczeniach");
+		}
+	}
+
+}

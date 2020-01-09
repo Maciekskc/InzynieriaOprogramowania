@@ -19,6 +19,8 @@ import DataLayer.Components.CustomerData;
 import DataLayer.Components.Video;
 
 import javax.swing.JComboBox;
+import javax.swing.JRadioButton;
+import javax.swing.JTextArea;
 
 public class RentalDialog extends JDialog implements ActionListener {
 
@@ -29,7 +31,7 @@ public class RentalDialog extends JDialog implements ActionListener {
 	public JTextField textFieldTelephone;
 	public JTextField textFieldSurname;
 	public JTextField textFieldEmail;
-	public JComboBox comboBoxVideos = new JComboBox<Video>();
+	public JComboBox<Video> comboBoxVideos = new JComboBox<Video>();
 	
 	private ArrayList<Video> allVideos = new ArrayList<>();
 	public ArrayList<Video> videos = new ArrayList<>();
@@ -52,6 +54,9 @@ public class RentalDialog extends JDialog implements ActionListener {
 	 */
 	public RentalDialog(ArrayList<Video> allVideos) {
 		this.allVideos = allVideos;
+		System.out.println("Dostêpne id filmów");
+		for(Video video: allVideos)
+			System.out.println(video.getId());
 		setBounds(100, 100, 341, 302);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -109,17 +114,18 @@ public class RentalDialog extends JDialog implements ActionListener {
 		
 		JButton btnChoseVideos = new JButton("Otwórz Panel Wyboru");
 		btnChoseVideos.addActionListener(new ActionListener() {
+			@SuppressWarnings("deprecation")
 			public void actionPerformed(ActionEvent e) {
 				JDialog dialog = new JDialog();
 				dialog.setBounds(100, 100, 160, 120);
 				dialog.getContentPane().setLayout(null);
 				JLabel lblId = new JLabel("Id Filmu");
 				lblId.setBounds(10, 11, 130, 14);
-				dialog.add(lblId);
+				dialog.getContentPane().add(lblId);
 				
 				textFieldId = new JTextField();
 				textFieldId.setBounds(10, 25, 130, 20);
-				dialog.add(textFieldId);
+				dialog.getContentPane().add(textFieldId);
 				textFieldId.setColumns(10);
 				
 				JButton btnNewButton = new JButton("Dodaj");
@@ -127,10 +133,14 @@ public class RentalDialog extends JDialog implements ActionListener {
 				btnNewButton.addActionListener(new ActionListener() {
 					@Override
 					public void actionPerformed(ActionEvent arg0) {
-							addVideo(Integer.parseInt(textFieldId.getText()));				
+							if(addVideo(Integer.parseInt(textFieldId.getText()))) {								
+								JOptionPane.showMessageDialog(new Frame(), "Kaseta zosta³a dodana");
+							}else {
+								JOptionPane.showMessageDialog(new Frame(), "Nie uda³o siê dodaæ kasety");
+							}
 					}
 				});
-				dialog.add(btnNewButton);
+				dialog.getContentPane().add(btnNewButton);
 				
 		        dialog.show();
 			}
@@ -170,18 +180,22 @@ public class RentalDialog extends JDialog implements ActionListener {
 		}
 	}
 	public boolean addVideo(int id) {
+		boolean isNew = true;
+		Video toAdd = new Video();
 		for (Video v : allVideos)
 			if(v.getId() == id) {
+				toAdd=v;
 				for (Video found : videos) 
-					if(found.getId() == id){					
-						videos.add(v);
-						comboBoxVideos.addItem(v);
-						this.add(comboBoxVideos);
+					if(found.equals(v)){	
+						isNew = false;
 					}
-				return true;
 			}
+		if(isNew) {
+			videos.add(toAdd);
+			comboBoxVideos.addItem(toAdd);
+			return true;
+		}
 		return false;
-		
 	}
 	
 	public CustomerData createCustomer() {

@@ -54,7 +54,7 @@ public class CustomerData {
 		this.email = email;
 	}
 	public String toString() {
-		return idNumber+";"+name+";"+surname;
+		return idNumber+";"+name+";"+surname+";"+telephoneNumber+";"+email;
 	}
 	
 }
