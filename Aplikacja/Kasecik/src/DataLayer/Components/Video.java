@@ -69,6 +69,7 @@ public class Video {
 	}
 	
 	public boolean equals(Video video) {
+		if(video == null) return false;
 		if(this.id == video.id) return true;
 		return false;
 	}

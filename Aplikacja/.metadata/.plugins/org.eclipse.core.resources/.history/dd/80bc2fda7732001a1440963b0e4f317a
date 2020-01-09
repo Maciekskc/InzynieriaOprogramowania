@@ -1,0 +1,51 @@
+package BusinesLayer;
+
+import java.util.ArrayList;
+import java.util.Calendar;
+
+import DataLayer.Components.Rental;
+import DataLayer.DataAccessLayer.DataOperationsImpl;
+import DataLayer.DataAccessLayer.IDataOperations;
+
+class RentalController {
+	private IDataOperations dtoData = new DataOperationsImpl();
+
+	private ReminderSender reminderSender;
+
+	public RentalController(IDataOperations dtoData) {
+		super();
+		this.dtoData = dtoData;
+		reminderSender = new ReminderSender(this.dtoData);
+	}
+
+	public boolean addRental() {
+		return true;
+	}
+
+	public boolean removeRental() {
+		return true;
+	}
+
+	public ArrayList<Rental> getRentals(){
+		return null;		
+	}
+	
+	public ArrayList<Rental> getDepricatedRentals(){
+		ArrayList<Rental> depricated = new ArrayList<>();
+		Calendar currentDate = Calendar.getInstance();
+		
+		for(Rental rent: dtoData.getRentals()) {
+			if(currentDate.after(rent.getRentalExpireDate())) {
+				depricated.add(rent);
+			}
+		}
+		
+		return depricated;	
+	}
+	
+	
+	public void genetateReminders() {
+		reminderSender.generateReminder();
+	}
+
+}

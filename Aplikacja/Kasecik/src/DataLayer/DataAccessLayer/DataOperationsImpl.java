@@ -15,10 +15,15 @@ public class DataOperationsImpl implements IDataOperations {
 	//obiekt przchowuj¹cy wszystkie dane
 	Data data = new Data();
 	
+	//dodaj obiekt wypo¿yczenia
 	@Override
 	public boolean addRental(ArrayList<Video> videos, CustomerData customer) {
 		try{
 			Rental newOne = new Rental();
+			newOne.setRentalDate(Calendar.getInstance());
+			Calendar date = newOne.getRentalDate();
+			date.add(Calendar.DAY_OF_YEAR, 5);
+			newOne.setRentalExpireDate(date);
 			newOne.setCustomer(customer);
 			newOne.setVideos(videos);
 			data.rentals.add(newOne);
@@ -48,20 +53,6 @@ public class DataOperationsImpl implements IDataOperations {
 		return null;
 	}
 
-	//zwraca liste filmów których data oddania ju¿ minê³a
-	@Override
-	public ArrayList<Rental> getDepricatedRentals() {
-		ArrayList<Rental> depricated = new ArrayList<>();
-		Calendar currentDate = Calendar.getInstance();
-		
-		for(Rental rent: data.rentals) {
-			if(currentDate.after(rent.getRentalExpireDate())) {
-				depricated.add(rent);
-			}
-		}
-		
-		return depricated;
-	}
 
 	//zmienia wspó³czynnik cebny wyporzyczenia na podany
 	@Override
@@ -79,7 +70,7 @@ public class DataOperationsImpl implements IDataOperations {
 				exist = true;
 				break;
 			}
-		if(exist) {
+		if(!exist) {
 			data.videos.add(video);
 			return true;
 		}
@@ -101,26 +92,17 @@ public class DataOperationsImpl implements IDataOperations {
 	//zmienia kasetê o podanym numerze id na nowe
 	@Override
 	public boolean editVideoById(Video video, int id) {
-		for (Video v : data.videos)
-			if(v.getId() == id) {
-				v = video;
+		for (int i = 0 ; i < data.videos.size() ; i ++)
+			if(data.videos.get(i).getId() == id) {
+				data.videos.get(i).setName(video.getName());
+				data.videos.get(i).setType(video.getType());
+				data.videos.get(i).setDuration(video.getDuration());
+				data.videos.get(i).setAmount(video.getAmount());
 				return true;
 			}
 		return false;
 	}
 
-	//zwraca liste kaset spe³niaj¹c¹ jryteria przeszukiwania
-	@Override
-	public ArrayList<Video> getVideos(int id, String name, String type) {
-		ArrayList<Video> videos = new ArrayList<>();
-		
-		for(Video video: data.videos) {
-			if(video.getId() == id	||	video.getName() == name	||	video.getType() == type)
-				videos.add(video);
-		}
-		
-		return videos;
-	}
 
 	@Override
 	public ArrayList<Video> getAllVideos() {
@@ -128,7 +110,11 @@ public class DataOperationsImpl implements IDataOperations {
 	}
 
 	@Override
-	public ArrayList<Rental> getAllRentals() {
+	public ArrayList<Rental> getRentals() {
 		return data.rentals;
+	}
+	
+	public void createBackUp() {
+		
 	}
 }

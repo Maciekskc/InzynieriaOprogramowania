@@ -1,0 +1,44 @@
+package BusinesLayer;
+
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+
+import DataLayer.Components.Video;
+import DataLayer.DataAccessLayer.DataOperationsImpl;
+import DataLayer.DataAccessLayer.IDataOperations;
+
+class VideoController {
+	private IDataOperations dtoData = new DataOperationsImpl();
+
+	public VideoController(IDataOperations dtoData) {
+		super();
+		this.dtoData = dtoData;
+	}
+	
+	public boolean addVideo() {
+		//otworzymy formularz do utworzenia video
+		
+		Video video = null;
+		dtoData.addVideo(video);
+		return false;
+	}
+	
+	public boolean removeVideo() {
+		//otworzymy dialog z combo boxem do wyboru video
+		return true;
+	}
+	
+	public boolean editVideoById(int id) {
+		//otwieramy panel do tworzenia video
+		Video video = null;
+		dtoData.editVideoById(video, id);
+		return true;
+	}
+	
+	//zwracal liste tytu³ów
+	public ArrayList<Video> getVideos(int id, String name, String type){
+		ArrayList<Video> result =  dtoData.getVideos(id, name, type);
+		//mo¿na jeszcze posortowaæ  ¿eby coœ to zrobi³o
+		return result;
+	}
+}

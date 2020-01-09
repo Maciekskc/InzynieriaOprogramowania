@@ -1,0 +1,9 @@
+package BusinesLayer;
+
+import DataLayer.DataAccessLayer.IDataOperations;
+
+class RentalController {
+	public RentalController(IDataOperations dtoData) {
+		// TODO Auto-generated constructor stub
+	}
+}

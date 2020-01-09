@@ -1,0 +1,9 @@
+package BusinesLayer;
+
+import DataLayer.DataAccessLayer.IDataOperations;
+
+class ReminderSender {
+	public ReminderSender(IDataOperations dtoData) {
+		// TODO Auto-generated constructor stub
+	}
+}

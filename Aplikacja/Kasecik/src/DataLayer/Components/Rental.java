@@ -53,7 +53,7 @@ public class Rental {
 			this.customer = customer;
 		}
 		public String toString() {
-			return rentalDate+";"+rentalExpireDate+";"+customer.getName()+";"+customer.getSurname();
+			return rentalDate.getTime()+";"+rentalExpireDate.getTime()+";"+customer.getName()+";"+customer.getSurname()+";"+videos.size();
 		}
 		public String generateReceipt() {
 			return "something";

@@ -1,0 +1,145 @@
+package PresentationLayer.Forms;
+
+import java.awt.BorderLayout;
+import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
+
+import DataLayer.Components.CustomerData;
+
+import javax.swing.JComboBox;
+
+public class RentalDialog extends JDialog implements ActionListener {
+
+	public JPanel contentPanel = new JPanel();
+	public JButton okButton;
+	public JTextField textFieldId;
+	public JTextField textFieldName;
+	public JTextField textFieldTelephone;
+	public JTextField textFieldSurname;
+	public JTextField textFieldEmail;
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		try {
+			RentalDialog dialog = new RentalDialog();
+			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+			dialog.setVisible(true);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * Create the dialog.
+	 */
+	public RentalDialog() {
+		setBounds(100, 100, 341, 302);
+		getContentPane().setLayout(new BorderLayout());
+		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
+		getContentPane().add(contentPanel, BorderLayout.CENTER);
+		contentPanel.setLayout(null);
+		
+		JLabel lblId = new JLabel("Numer Identyfikacyjny");
+		lblId.setBounds(10, 11, 130, 14);
+		contentPanel.add(lblId);
+		
+		textFieldId = new JTextField();
+		textFieldId.setBounds(10, 25, 130, 20);
+		contentPanel.add(textFieldId);
+		textFieldId.setColumns(10);
+		
+		JLabel labelTelephone = new JLabel("Numer Telefonu");
+		labelTelephone.setBounds(182, 11, 130, 14);
+		contentPanel.add(labelTelephone);
+		
+		textFieldTelephone = new JTextField();
+		textFieldTelephone.setColumns(10);
+		textFieldTelephone.setBounds(182, 25, 130, 20);
+		contentPanel.add(textFieldTelephone);
+		
+		JLabel labelName = new JLabel("Imie");
+		labelName.setBounds(10, 56, 130, 14);
+		contentPanel.add(labelName);
+		
+		textFieldName = new JTextField();
+		textFieldName.setColumns(10);
+		textFieldName.setBounds(10, 70, 130, 20);
+		contentPanel.add(textFieldName);
+		
+		JLabel labelSurname = new JLabel("Nazwisko");
+		labelSurname.setBounds(182, 56, 130, 14);
+		contentPanel.add(labelSurname);
+		
+		textFieldSurname = new JTextField();
+		textFieldSurname.setColumns(10);
+		textFieldSurname.setBounds(182, 70, 130, 20);
+		contentPanel.add(textFieldSurname);
+		
+		JLabel labelEmail = new JLabel("Email");
+		labelEmail.setBounds(10, 101, 130, 14);
+		contentPanel.add(labelEmail);
+		
+		textFieldEmail = new JTextField();
+		textFieldEmail.setColumns(10);
+		textFieldEmail.setBounds(10, 115, 130, 20);
+		contentPanel.add(textFieldEmail);
+		
+		JLabel labelChooseVideos = new JLabel("Wybieanie Fimów");
+		labelChooseVideos.setBounds(182, 101, 130, 14);
+		contentPanel.add(labelChooseVideos);
+		
+		JButton btnChoseVideos = new JButton("Otwórz Panel Wyboru");
+		btnChoseVideos.setBounds(181, 115, 131, 34);
+		contentPanel.add(btnChoseVideos);
+		
+		JLabel labelComboBoxVideos = new JLabel("Wybrane Pozycje");
+		labelComboBoxVideos.setBounds(10, 160, 130, 14);
+		contentPanel.add(labelComboBoxVideos);
+		
+		JComboBox comboBoxVideos = new JComboBox();
+		comboBoxVideos.setBounds(10, 185, 302, 34);
+		contentPanel.add(comboBoxVideos);
+		{
+			JPanel buttonPane = new JPanel();
+			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
+			getContentPane().add(buttonPane, BorderLayout.SOUTH);
+			{
+				okButton = new JButton("OK");
+				okButton.addActionListener(this);
+				okButton.setActionCommand("OK");
+				buttonPane.add(okButton);
+				getRootPane().setDefaultButton(okButton);
+			}
+			{
+				JButton cancelButton = new JButton("Cancel");
+				cancelButton.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						setVisible(false);
+					}
+				});
+				cancelButton.setActionCommand("Cancel");
+				buttonPane.add(cancelButton);
+			}
+		}
+	}
+
+	public CustomerData createCustomer() {
+		return 
+	}
+	
+	@Override
+	public void actionPerformed(ActionEvent arg0) {
+		System.out.println("Klasa Bazowa");
+		
+	}
+}

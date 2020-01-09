@@ -31,6 +31,7 @@ public class App extends JPanel implements IModifyMethods, ISalesmanMethods {
 	/**
 	 * Create the panel.
 	 */
+	//do wyjebania
 	String data[][] = { { "Vinod", "100" }, { "Raju", "200" }, { "Ranju", "300" } };
 	String col[] = { "Name", "code" };
 	private DefaultTableModel tableModel = new DefaultTableModel(data, col);
@@ -51,7 +52,7 @@ public class App extends JPanel implements IModifyMethods, ISalesmanMethods {
 				new App();
 			}
 		});
-		System.out.println("Duuuupa, ale ruszy³em");
+		System.out.println("Ruszy³em");
 	}
 
 	public App() {
@@ -75,29 +76,49 @@ public class App extends JPanel implements IModifyMethods, ISalesmanMethods {
 		menuBar.setBounds(0, 0, 450, 22);
 		add(menuBar);
 
-		JMenu mnWypoyczenia = new JMenu("Wypo\u017Cyczenia");
-		menuBar.add(mnWypoyczenia);
+		JMenu mnRentals = new JMenu("Wypo\u017Cyczenia");
+		menuBar.add(mnRentals);
 
 		JMenuItem mntmAddRental = new JMenuItem("Dodaj");
-		mnWypoyczenia.add(mntmAddRental);
+		mntmAddRental.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				controller.addRental();
+			}
+		});
+		mnRentals.add(mntmAddRental);
 
 		JMenuItem mntmDeleteRental = new JMenuItem("Usun");
-		mnWypoyczenia.add(mntmDeleteRental);
+		mnRentals.add(mntmDeleteRental);
 
 		JMenuItem mntmEditRental = new JMenuItem("Edytuj");
-		mnWypoyczenia.add(mntmEditRental);
+		mnRentals.add(mntmEditRental);
 
-		JMenu mnKasety = new JMenu("Kasety");
-		menuBar.add(mnKasety);
+		JMenu mnVideos = new JMenu("Kasety");
+		menuBar.add(mnVideos);
 
 		JMenuItem mntmAddVideo = new JMenuItem("Dodaj");
-		mnKasety.add(mntmAddVideo);
+		mntmAddVideo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				controller.addVideo();
+			}
+		});
+		mnVideos.add(mntmAddVideo);
 
 		JMenuItem mntmDeleteVideo = new JMenuItem("Usun");
-		mnKasety.add(mntmDeleteVideo);
+		mntmDeleteVideo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				controller.deleteVideo();
+			}
+		});
+		mnVideos.add(mntmDeleteVideo);
 
 		JMenuItem mntmEditVideo = new JMenuItem("Edytuj");
-		mnKasety.add(mntmEditVideo);
+		mntmEditVideo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				controller.editVideo();
+			}
+		});
+		mnVideos.add(mntmEditVideo);
 
 		JButton buttonRentals = new JButton("Wypo\u017Cyczenia");
 		buttonRentals.addActionListener(new ActionListener() {
@@ -132,8 +153,8 @@ public class App extends JPanel implements IModifyMethods, ISalesmanMethods {
 
 		tableModel.setColumnIdentifiers(collumnNames);
 		try {
-			for (int i = 0; i < controller.getDtoData().getAllRentals().size(); i++) {
-				Rental rent = controller.getDtoData().getAllRentals().get(i);
+			for (int i = 0; i < controller.getRentals().size(); i++) {
+				Rental rent = controller.getRentals().get(i);
 				Object[] show = { rent.getCustomer().getName(), rent.getCustomer().getSurname(), rent.getRentalDate(),
 						rent.getRentalExpireDate() };
 				tableModel.insertRow(i, show);
@@ -141,11 +162,14 @@ public class App extends JPanel implements IModifyMethods, ISalesmanMethods {
 		} catch (Exception e1) {
 			System.out.println(tableModel);
 		}
+		for(Rental r : controller.getRentals()) {
+			System.out.println(r.toString());
+		}
 	}
 
 	private void fillWithVideos() {
-
-		controller.getDtoData().addVideo(new Video(2354, "Wojny Klonów", "Fantasy", 120, 2));
+		//przyk³¹dowy rekord, do wywalenia
+		System.out.println(controller.getAllVideos().size());
 		String collumnNames[] = { "Id", "Nazwa", "Czas trwania", "Typ", "Iloœæ na stanie" };
 
 		try {
@@ -159,14 +183,17 @@ public class App extends JPanel implements IModifyMethods, ISalesmanMethods {
 
 		tableModel.setColumnIdentifiers(collumnNames);
 		try {
-			for (int i = 0; i < controller.getDtoData().getAllVideos().size(); i++) {
-				Video video = controller.getDtoData().getAllVideos().get(i);
+			for (int i = 0; i < controller.getAllVideos().size(); i++) {
+				Video video = controller.getAllVideos().get(i);
 				Object[] show = { video.getId(), video.getName(), video.getDuration() + "minut", video.getType(),
 						video.getAmount() };
 				tableModel.insertRow(i, show);
 			}
 		} catch (Exception e1) {
 			System.out.println(tableModel);
+		}
+		for(Video v : controller.getAllVideos()) {
+			System.out.println(v.toString());
 		}
 	}
 

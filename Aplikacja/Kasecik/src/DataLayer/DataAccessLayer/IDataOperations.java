@@ -11,13 +11,11 @@ public interface IDataOperations {
 	public boolean addRental(ArrayList<Video> videos, CustomerData customer);
 	public boolean removeRental(Rental rental);
 	public Rental getRentalById(int id);
-	public ArrayList<Rental> getDepricatedRentals();
-	public ArrayList<Rental> getAllRentals();
+	public ArrayList<Rental> getRentals();
 	public boolean changeSurcharge(float rate);
 	public boolean addVideo(Video video);
 	public boolean removeVideo(Video video);
 	public boolean editVideoById(Video video, int id);
-	public ArrayList<Video> getVideos(int id, String name,  String type);
 	public ArrayList<Video> getAllVideos();
 	
 }
