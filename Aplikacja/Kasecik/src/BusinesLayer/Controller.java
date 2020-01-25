@@ -17,6 +17,7 @@ import DataLayer.DataAccessLayer.IDataOperations;
 public class Controller {
 	//obiekt interfejsi dostêpu do danych
 	private IDataOperations dtoData = new DataOperationsImpl();
+
 	
 	//obiekty kontrolerów poszczególnych operacji
 	private ParameterMenager parameterMenager = new ParameterMenager(dtoData);
@@ -59,5 +60,15 @@ public class Controller {
 	
 	public ArrayList<Rental> getDepricatedRentals() {
 		return rentalController.getDepricatedRentals();
+	}
+	
+	public void changeRate() {
+		float rate = 3.0F;
+		parameterMenager.changeRate(rate);
+	}
+
+	public void sendReminders() {
+		rentalController.sendReminders();
+		
 	}
 }

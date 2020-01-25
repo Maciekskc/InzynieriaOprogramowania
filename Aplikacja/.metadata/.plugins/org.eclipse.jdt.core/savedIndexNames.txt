@@ -1,3 +1,10 @@
-INDEX VERSION 1.130+C:\Users\user\Desktop\Uczelnia\Semestr 5\IO\Aplikacja\.metadata\.plugins\org.eclipse.jdt.core
-1951089909.index
+INDEX VERSION 1.131+C:\Users\user\Desktop\Uczelnia\Semestr5\IO\Aplikacja\.metadata\.plugins\org.eclipse.jdt.core
 2498283261.index
+1310692385.index
+381626529.index
+1951089909.index
+992141942.index
+345464637.index
+1698403544.index
+150031079.index
+3335768135.index

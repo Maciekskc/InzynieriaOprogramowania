@@ -35,7 +35,12 @@ class RentalController {
 	public boolean addRental() {
 		JDialog dialog = new RentalDialog(dtoData.getAllVideos()) {
 			public void actionPerformed(ActionEvent e) {
-				if(dtoData.addRental(getSelectedVideos(),createCustomer())) {					
+				if(dtoData.addRental(getSelectedVideos(),createCustomer())) {	
+					ArrayList<Video> videos = getSelectedVideos();
+					for(Video list: videos)
+						for(Video video: dtoData.getAllVideos())
+							if(video.equals(list))
+								video.setAmount(video.getAmount()-1);
 					JOptionPane.showMessageDialog(new Frame(), "Dodano Wypo¿yczenie");
 				}else {
 					JOptionPane.showMessageDialog(new Frame(), "Nie uda³o siê dodaæ wypo¿yczenia");
@@ -118,7 +123,8 @@ class RentalController {
 	}
 	
 	
-	public Rental getRentalById(int id) {
+	public Rental getRentalById() {
+		int id=0;
 		for(Rental rental: getRentals()) 
 			if(rental.getId() == id)
 				return rental;

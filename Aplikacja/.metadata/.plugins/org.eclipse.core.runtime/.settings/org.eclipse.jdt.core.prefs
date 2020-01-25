@@ -6,3 +6,4 @@ org.eclipse.jdt.core.compiler.compliance=9
 org.eclipse.jdt.core.compiler.problem.assertIdentifier=error
 org.eclipse.jdt.core.compiler.problem.enumIdentifier=error
 org.eclipse.jdt.core.compiler.source=9
+org.eclipse.jdt.core.userLibrary.JUnit\ and\ JMockit=<?xml version\="1.0" encoding\="UTF-8"?>\r\n<userlibrary systemlibrary\="false" version\="2">\r\n\t<archive path\="C\:/Program Files/Java/jdk-9.0.4/lib/junit/jmockit-1.27.jar"/>\r\n\t<archive path\="C\:/Program Files/Java/jdk-9.0.4/lib/junit/junit-4.13.jar"/>\r\n</userlibrary>\r\n

@@ -10,7 +10,6 @@ import java.util.concurrent.Callable;
 import DataLayer.Data;
 import DataLayer.Components.CustomerData;
 import DataLayer.Components.Rental;
-import DataLayer.Components.Type;
 import DataLayer.Components.Video;
 
 public class DataOperationsImpl implements IDataOperations {
@@ -29,7 +28,9 @@ public class DataOperationsImpl implements IDataOperations {
 			newOne.setRentalExpireDate(date);
 			newOne.setCustomer(customer);
 			newOne.setVideos(videos);
+			newOne.setId(data.rentals.get(data.rentals.size()-1).getId()+1);
 			data.rentals.add(newOne);
+			createRentalBackUp();
 		}catch(Exception e) {
 			return false;
 		}
@@ -37,12 +38,19 @@ public class DataOperationsImpl implements IDataOperations {
 		return true;
 	}
 	
+	
+	
 	//usuñ podany w parametrze obiekt wypo¿yczenia jeœli istnieje 
 	@Override
 	public boolean removeRental(Rental rental) {
 		for (Rental rent : data.rentals)
 			if(rent.equals(rental)) {
+				for(Video list: rent.getVideos())
+					for(Video video: data.videos)
+						if(video.equals(list))
+							video.setAmount(video.getAmount()+1);
 				data.rentals.remove(rent);
+				createRentalBackUp();
 				return true;
 			}
 		return false;
@@ -61,6 +69,9 @@ public class DataOperationsImpl implements IDataOperations {
 	//zmienia wspó³czynnik cebny wyporzyczenia na podany
 	@Override
 	public boolean changeSurcharge(float rate) {
+		if(data.rate == rate) {
+			return false;
+		}
 		data.rate = rate;
 		return true;
 	}
@@ -146,11 +157,10 @@ public class DataOperationsImpl implements IDataOperations {
 	        }
 	}
 
+	//tworzenie back upu wypo¿yczeñ
 	public void createRentalBackUp() {
-		//tworzenie back upu
 	      BufferedWriter writer = null;
 	        try {
-	            //create a temporary file
 	            String path = "RentalsBackUp.txt";
 	            File logFile = new File(path);
 	            System.out.println("Utworzono plik z zapasowymi danymi" + logFile.getCanonicalPath());
@@ -165,9 +175,9 @@ public class DataOperationsImpl implements IDataOperations {
 	            e.printStackTrace();
 	        } finally {
 	            try {
-	                // Close the writer regardless of what happens...
 	                writer.close();
 	            } catch (Exception e) {
+	            	System.out.println("Napotkano problem podczas zamykania pliku");
 	            }
 	        }
 	}
@@ -176,4 +186,6 @@ public class DataOperationsImpl implements IDataOperations {
 	public float getRate() {
 		return data.rate;
 	}
+
+	
 }

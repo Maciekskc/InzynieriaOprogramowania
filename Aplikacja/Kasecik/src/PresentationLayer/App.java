@@ -52,6 +52,8 @@ public class App extends JPanel implements IModifyMethods, ISalesmanMethods {
 	}
 
 	public App() {
+		//do
+	
 		JFrame mainFrame = new JFrame();
 		mainFrame.setTitle("Kasecik");
 		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -78,7 +80,7 @@ public class App extends JPanel implements IModifyMethods, ISalesmanMethods {
 		JMenuItem mntmAddRental = new JMenuItem("Dodaj");
 		mntmAddRental.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				controller.addRental();
+				createRental();
 			}
 		});
 		mnRentals.add(mntmAddRental);
@@ -86,7 +88,7 @@ public class App extends JPanel implements IModifyMethods, ISalesmanMethods {
 		JMenuItem mntmDeleteRental = new JMenuItem("Zwróæ");
 		mntmDeleteRental.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				controller.removeRental();
+				returnVideo();
 			}
 		});
 		mnRentals.add(mntmDeleteRental);
@@ -97,7 +99,7 @@ public class App extends JPanel implements IModifyMethods, ISalesmanMethods {
 		JMenuItem mntmDepricated = new JMenuItem("Przeterminowane");
 		mntmDepricated.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				fillWithRentals(controller.getDepricatedRentals());
+				showDepricatedRentals();
 			}
 		});
 		mnRentals.add(mntmDepricated);
@@ -108,7 +110,7 @@ public class App extends JPanel implements IModifyMethods, ISalesmanMethods {
 		JMenuItem mntmAddVideo = new JMenuItem("Dodaj");
 		mntmAddVideo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				controller.addVideo();
+				addVideo();
 			}
 		});
 		mnVideos.add(mntmAddVideo);
@@ -116,7 +118,7 @@ public class App extends JPanel implements IModifyMethods, ISalesmanMethods {
 		JMenuItem mntmDeleteVideo = new JMenuItem("Usun");
 		mntmDeleteVideo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				controller.deleteVideo();
+				deleteVideo();
 			}
 		});
 		mnVideos.add(mntmDeleteVideo);
@@ -124,7 +126,7 @@ public class App extends JPanel implements IModifyMethods, ISalesmanMethods {
 		JMenuItem mntmEditVideo = new JMenuItem("Edytuj");
 		mntmEditVideo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				controller.editVideo();
+				editVideo();
 			}
 		});
 		mnVideos.add(mntmEditVideo);
@@ -172,7 +174,7 @@ public class App extends JPanel implements IModifyMethods, ISalesmanMethods {
 			System.out.println(tableModel);
 		}
 		for(Rental r : rentals) {
-			System.out.println(r.toString());
+			System.out.println(r.fullString());
 		}
 	}
 
@@ -204,5 +206,55 @@ public class App extends JPanel implements IModifyMethods, ISalesmanMethods {
 		for(Video v : videos) {
 			System.out.println(v.toString());
 		}
+	}
+
+	@Override
+	public void createRental() {
+		controller.addRental();
+	}
+
+	@Override
+	public void choseVideo() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void returnVideo() {
+		controller.removeRental();
+	}
+
+	@Override
+	public void showDepricatedRentals() {
+		fillWithRentals(controller.getDepricatedRentals());
+	}
+
+	@Override
+	public void createVideo() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void addVideo() {
+		controller.addVideo();
+		
+	}
+
+	@Override
+	public void editVideo() {
+		controller.editVideo();
+		
+	}
+
+	@Override
+	public void deleteVideo() {
+		controller.deleteVideo();
+		
+	}
+
+	@Override
+	public void changeRate() {
+		controller.changeRate();		
 	}
 }
